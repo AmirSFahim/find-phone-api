@@ -5,23 +5,23 @@ const loadPhone = async (searchText, dataLimit) => {
     displayPhone(data.data, dataLimit)
 }
 
-const displayPhone = (phones, dataLimit)=> {
+const displayPhone = (phones, dataLimit) => {
     const phoneContainer = document.getElementById('phone-container');
     phoneContainer.textContent = ''
     // display 20 phone only 
-    const showAll =document.getElementById('show-all');
-    if(dataLimit && phones.length > 10){
-    phones = phones.slice(0, 10);
-    showAll.classList.remove('d-none')
+    const showAll = document.getElementById('show-all');
+    if (dataLimit && phones.length > 10) {
+        phones = phones.slice(0, 10);
+        showAll.classList.remove('d-none')
     }
-    else{
+    else {
 
         showAll.classList.add('d-none')
     }
 
-    const nophone =document.getElementById('no-found-message')
-    
-    if(phones.length === 0){
+    const nophone = document.getElementById('no-found-message')
+
+    if (phones.length === 0) {
         nophone.classList.remove('d-none')
     }
     else nophone.classList.add('d-none')
@@ -40,37 +40,37 @@ const displayPhone = (phones, dataLimit)=> {
                     </div>
         `
         phoneContainer.appendChild(phoneDiv)
-        
+
     })// stop loader 
-        toggleApiner(false)
+    toggleApiner(false)
 }
 
-const processSearch =(dataLimit)=>{
+const processSearch = (dataLimit) => {
     toggleApiner(true);
     const searchField = document.getElementById('searchField');
-    const searchText = searchField.value ;
-    loadPhone(searchText,dataLimit)
+    const searchText = searchField.value;
+    loadPhone(searchText, dataLimit)
 }
-document.getElementById('btn-search').addEventListener('click', function(){
+document.getElementById('btn-search').addEventListener('click', function () {
     // start loader 
     processSearch(10);
 })
 
 // enter key 
-document.getElementById('searchField').addEventListener('keypress', function(e){
-    if(e.key=='Enter'){
+document.getElementById('searchField').addEventListener('keypress', function (e) {
+    if (e.key == 'Enter') {
         processSearch(10);
     }
 })
 
 
-const toggleApiner = isLoading =>{
+const toggleApiner = isLoading => {
     const loaderScetion = document.getElementById('loader')
-    if(isLoading){
+    if (isLoading) {
 
         loaderScetion.classList.remove('d-none')
     }
-    else{
+    else {
         loaderScetion.classList.add('d-none')
     }
 }
@@ -78,14 +78,14 @@ const toggleApiner = isLoading =>{
 
 
 // show all btn load show all 
-document.getElementById('btn-show-all').addEventListener('click',function(){
+document.getElementById('btn-show-all').addEventListener('click', function () {
     processSearch();
 })
 
 
 
 // loadphone detai 
-const loadPhoneDetail = async id =>{
+const loadPhoneDetail = async id => {
     const url = `https://openapi.programming-hero.com/api/phone/${id}`
 
     const res = await fetch(url);
@@ -94,14 +94,14 @@ const loadPhoneDetail = async id =>{
 
 }
 
-const displayPhoneDetails =phone=>{
- const modalTitle =document.getElementById('phoneDetailModalDetail');
- modalTitle.innerText =phone.name; 
- const phoneDetails = document.getElementById('phone-detais')
- phoneDetails.innerHTML=`
+const displayPhoneDetails = phone => {
+    const modalTitle = document.getElementById('phoneDetailModalDetail');
+    modalTitle.innerText = phone.name;
+    const phoneDetails = document.getElementById('phone-detais')
+    phoneDetails.innerHTML = `
  <p> realease date : ${phone.releaseDate ? phone.releaseDate : 'no release date '} </p>
- <P> storage : ${phone.mainFeatures ? phone.mainFeatures.storage: 'no informatin'} </p>
- <p> others: ${phone.others ? phone.others.Bluethooth:'no bluethooth' }</p>
+ <P> storage : ${phone.mainFeatures ? phone.mainFeatures.storage : 'no informatin'} </p>
+ <p> others: ${phone.others ? phone.others.Bluethooth : 'no bluethooth'}</p>
  `
 }
 
